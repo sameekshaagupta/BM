@@ -669,7 +669,7 @@ const CareerPage = () => {
                   disabled={isSubmitting}
                   style={checkboxStyle}
                 />
-                <span>I consent to the processing of my personal data *</span>
+                <span>Ii consent to the processing of my personal data *</span>
               </label>
             </motion.div>
 
