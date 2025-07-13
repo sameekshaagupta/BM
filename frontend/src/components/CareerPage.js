@@ -118,7 +118,10 @@ const handleSubmit = async (e) => {
       }
     });
 
-    const API_URL = process.env.REACT_APP_API_URL || 'https://bmbackend.onrender.com';
+    // Use the exact API URL that's working
+    const API_URL = 'https://bmbackend.onrender.com';
+    
+    console.log('Submitting to:', `${API_URL}/api/careers/submit`);
     
     const response = await fetch(`${API_URL}/api/careers/submit`, {
       method: 'POST',
@@ -126,9 +129,19 @@ const handleSubmit = async (e) => {
       // Don't set Content-Type header for FormData
     });
 
-    const result = await response.json();
+    console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
 
-    if (response.ok && result.success) {
+    // Check if response is ok first
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Response data:', result);
+
+    if (result.success) {
       setSubmitStatus({
         type: 'success',
         message: 'Application submitted successfully! We\'ll be in touch soon.'
@@ -160,18 +173,23 @@ const handleSubmit = async (e) => {
   } catch (error) {
     console.error('Submission error:', error);
     
+    let errorMessage = 'An error occurred. Please try again.';
+    
     // More specific error handling
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Unable to connect to server. Please check your internet connection and try again.'
-      });
-    } else {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Network error. Please try again later.'
-      });
+      errorMessage = 'Unable to connect to server. Please check your internet connection and try again.';
+    } else if (error.name === 'TypeError' && error.message.includes('NetworkError')) {
+      errorMessage = 'Network error. Please check your connection and try again.';
+    } else if (error.message.includes('HTTP error!')) {
+      errorMessage = 'Server error. Please try again later.';
+    } else if (error.message) {
+      errorMessage = error.message;
     }
+    
+    setSubmitStatus({
+      type: 'error',
+      message: errorMessage
+    });
   } finally {
     setIsSubmitting(false);
   }

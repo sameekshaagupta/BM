@@ -154,28 +154,38 @@ app.get('/api/test-email', async (req, res) => {
 
 // Careers form submission
 app.post('/api/careers/submit', upload.single('resume'), async (req, res) => {
+  console.log('Received careers form submission');
+  console.log('Body:', req.body);
+  console.log('File:', req.file);
+  
   try {
     // Validate required fields
     const requiredFields = ['firstName', 'lastName', 'email', 'position', 'experience', 'relocate', 'coverLetter', 'consent'];
     const missingFields = requiredFields.filter(field => !req.body[field]);
     
     if (missingFields.length > 0) {
+      console.log('Missing fields:', missingFields);
       return res.status(400).json({
         success: false,
-        message: 'Missing required fields',
+        message: 'Missing required fields: ' + missingFields.join(', '),
         missingFields
       });
     }
 
     if (!req.file) {
+      console.log('No file uploaded');
       return res.status(400).json({
         success: false,
         message: 'Resume file is required'
       });
     }
 
+    console.log('Creating transporter...');
     const transporter = createTransporter();
+    
+    console.log('Verifying transporter...');
     await transporter.verify();
+    console.log('Transporter verified successfully');
 
     const mailOptions = {
       from: `"Blacksmith Mechatronics Careers" <${process.env.EMAIL_USER}>`,
@@ -191,7 +201,9 @@ app.post('/api/careers/submit', upload.single('resume'), async (req, res) => {
       ]
     };
 
+    console.log('Sending email...');
     const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.messageId);
     
     // Clean up uploaded file
     fs.unlink(req.file.path, (err) => {
@@ -211,9 +223,20 @@ app.post('/api/careers/submit', upload.single('resume'), async (req, res) => {
       fs.unlinkSync(req.file.path);
     }
 
+    // Send more specific error messages
+    let errorMessage = 'Failed to submit application';
+    
+    if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED') {
+      errorMessage = 'Email service temporarily unavailable';
+    } else if (error.message.includes('Invalid login')) {
+      errorMessage = 'Email configuration error';
+    } else if (error.message.includes('timeout')) {
+      errorMessage = 'Request timeout - please try again';
+    }
+
     res.status(500).json({
       success: false,
-      message: 'Failed to submit application',
+      message: errorMessage,
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
