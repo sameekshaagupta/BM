@@ -124,7 +124,9 @@ const CareerPage = () => {
         formDataObj.append('resume', formData.resume);
       }
 
-      const response = await fetch('https://blacksmithbackend-hsej.onrender.com/api/careers/submit', {
+      const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://blacksmithbackend-hsej.onrender.com';
+
+      const response = await fetch(`${API_BASE_URL}/api/careers/submit`, {
         method: 'POST',
         body: formDataObj
       });
