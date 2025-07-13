@@ -114,8 +114,8 @@ const headerStyle = {
   };
 
   const logoImageStyle = {
-    width: scrollY > 50 ? '70px' : '70px',
-    height: scrollY > 50 ? '70px' : '70px',
+    width: scrollY > 50 ? '80px' : '80px',
+    height: scrollY > 50 ? '80px' : '80px',
     marginRight: '0.8rem',
     transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
     position: 'relative',
