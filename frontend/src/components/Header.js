@@ -206,7 +206,7 @@ const headerStyle = {
           to="/"
           style={logoStyle}
           className="logo"
-          onClick={(e) => handleNavClick('home', e)}
+          onClick={(e) => handleNavClick('', e)}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Hover effect only on image container */}
