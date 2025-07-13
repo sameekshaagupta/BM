@@ -118,7 +118,7 @@ const handleSubmit = async (e) => {
       }
     });
 
-    const API_URL = process.env.REACT_APP_API_URL || 'http://blacksmithbackend.onrender.com';
+    const API_URL = process.env.REACT_APP_API_URL || 'https://bmbackend.onrender.com';
     
     const response = await fetch(`${API_URL}/api/careers/submit`, {
       method: 'POST',

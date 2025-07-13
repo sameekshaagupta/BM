@@ -63,7 +63,7 @@ const ContactPage = () => {
     });
 
     try {
-      const response = await fetch('https://blacksmithbackend-hsej.onrender.com/api/contact/submit', {
+      const response = await fetch('https://bmbackend.onrender.com/api/contact/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
