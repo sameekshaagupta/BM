@@ -92,85 +92,90 @@ const CareerPage = () => {
       [name]: type === 'file' ? files[0] : type === 'checkbox' ? checked : value
     }));
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitStatus(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
+  if (!formData.consent) {
+    setSubmitStatus({
+      type: 'error',
+      message: 'You must consent to the processing of your personal data'
+    });
+    setIsSubmitting(false);
+    return;
+  }
 
-    if (!formData.consent) {
+  try {
+    const formDataObj = new FormData();
+    
+    // Add all form fields
+    Object.keys(formData).forEach(key => {
+      if (key === 'resume' && formData[key]) {
+        formDataObj.append(key, formData[key]);
+      } else if (key !== 'resume') {
+        formDataObj.append(key, formData[key]);
+      }
+    });
+
+    const API_URL = process.env.REACT_APP_API_URL || 'http://blacksmithbackend.onrender.com/';
+    
+    const response = await fetch(`${API_URL}/api/careers/submit`, {
+      method: 'POST',
+      body: formDataObj,
+      // Don't set Content-Type header for FormData
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      setSubmitStatus({
+        type: 'success',
+        message: 'Application submitted successfully! We\'ll be in touch soon.'
+      });
+      
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        position: '',
+        relocate: '',
+        experience: '',
+        coverLetter: '',
+        resume: null,
+        consent: false
+      });
+      
+      const fileInput = document.getElementById('resume');
+      if (fileInput) fileInput.value = '';
+      
+    } else {
       setSubmitStatus({
         type: 'error',
-        message: 'You must consent to the processing of your personal data'
+        message: result.message || 'Failed to submit application. Please try again.'
       });
-      setIsSubmitting(false);
-      return;
     }
-
-    try {
-      const formDataObj = new FormData();
-      
-      formDataObj.append('firstName', formData.firstName);
-      formDataObj.append('lastName', formData.lastName);
-      formDataObj.append('email', formData.email);
-      formDataObj.append('phone', formData.phone || '');
-      formDataObj.append('position', formData.position);
-      formDataObj.append('relocate', formData.relocate);
-      formDataObj.append('experience', formData.experience);
-      formDataObj.append('coverLetter', formData.coverLetter);
-      formDataObj.append('consent', formData.consent.toString());
-      
-      if (formData.resume) {
-        formDataObj.append('resume', formData.resume);
-      }
-
-      const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://blacksmithbackend.onrender.com';
-
-      const response = await fetch(`${API_BASE_URL}/api/careers/submit`, {
-        method: 'POST',
-        body: formDataObj
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        setSubmitStatus({
-          type: 'success',
-          message: 'Application submitted successfully! We\'ll be in touch soon.'
-        });
-        
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          position: '',
-          relocate: '',
-          experience: '',
-          coverLetter: '',
-          resume: null,
-          consent: false
-        });
-        
-        const fileInput = document.getElementById('resume');
-        if (fileInput) fileInput.value = '';
-        
-      } else {
-        setSubmitStatus({
-          type: 'error',
-          message: result.message || 'Failed to submit application. Please try again.'
-        });
-      }
-    } catch (error) {
-      console.error('Submission error:', error);
+  } catch (error) {
+    console.error('Submission error:', error);
+    
+    // More specific error handling
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
       setSubmitStatus({
         type: 'error',
-        message: 'Network error. Please check your connection and try again.'
+        message: 'Unable to connect to server. Please check your internet connection and try again.'
       });
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Network error. Please try again later.'
+      });
     }
-  };
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   // Style objects
   const pageStyle = {
