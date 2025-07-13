@@ -68,7 +68,7 @@ const AboutPage = () => {
     position: 'relative',
     overflow: 'hidden',
     cursor: 'none',
-    paddingTop: isMobile ? '60px' : '30px'
+    paddingTop: isMobile ? '70px' : '30px'
   };
 
   const customCursorStyle = {
