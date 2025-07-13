@@ -408,7 +408,7 @@ const AboutPage = () => {
                 whileHover={{ scale: 1.02 }}
               >
                 <img 
-                  src="https://randomuser.me/api/portraits/men/44.jpg" 
+                  src="pratik.jpeg" 
                   alt="Prashant Panchal" 
                   style={teamImageStyle}
                 />
