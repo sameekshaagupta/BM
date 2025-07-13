@@ -1,0 +1,6 @@
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/rewear?retryWrites=true&w=majority
+//mongodb+srv://esha10:eBmDb@1207@eshacluster.tfl1fnp.mongodb.net/
+
+# Frontend API Configuration
+REACT_APP_API_URL=https://your-backend-domain.com
