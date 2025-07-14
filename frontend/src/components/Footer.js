@@ -283,7 +283,7 @@ const Footer = () => {
           
           <div style={contactItemStyle}>
             <span style={contactIconStyle }>📞</span>
-            <span style={{color: 'rgba(255, 255, 255, 0.8)', paddingTop:'4px'}}>+91-9913490604</span>
+            <span style={{color: 'rgba(255, 255, 255, 0.8)', paddingTop:'4px'}}>+91-99134 90604</span>
           </div>
           
           <div style={contactItemStyle}>

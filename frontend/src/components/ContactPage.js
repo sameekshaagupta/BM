@@ -511,7 +511,7 @@ const ContactPage = () => {
                 <span style={contactIconStyle} className="contact-icon">👤</span>
                 <div>
                   <strong>Pratik Panchal</strong><br />
-                  <span>+91-9913490604</span>
+                  <span>+91-99134 90604</span>
                 </div>
               </div>
               <div 
