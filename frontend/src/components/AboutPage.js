@@ -392,10 +392,10 @@ const AboutPage = () => {
               >
                 <img 
                   src="jagdish.jpg" 
-                  alt=" Jagdish Panchal" 
+                  alt=" Pratik Panchal" 
                   style={teamImageStyle}
                 />
-                <h3 style={teamNameStyle}>Jagdish Panchal</h3>
+                <h3 style={teamNameStyle}>Pratik Panchal</h3>
                 <p style={teamRoleStyle}>Co-Founder & CTO</p>
                 <p style={teamBioStyle}>
                   Mechanical engineer with 12+ years of experience in industrial automation and additive manufacturing. Leads our technical innovation initiatives.

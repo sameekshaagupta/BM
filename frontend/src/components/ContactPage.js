@@ -510,8 +510,8 @@ const ContactPage = () => {
               >
                 <span style={contactIconStyle} className="contact-icon">👤</span>
                 <div>
-                  <strong>Jagdish Panchal</strong><br />
-                  <span>+91-9925227359</span>
+                  <strong>Pratik Panchal</strong><br />
+                  <span>+91-9913490604</span>
                 </div>
               </div>
               <div 
