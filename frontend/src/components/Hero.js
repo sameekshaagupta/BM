@@ -309,10 +309,10 @@ const HomePage = () => {
             position: 'relative',
             zIndex: 4,
             width: isMobile ? '95%' : '80%',
-            maxWidth: '1000px',
+            maxWidth: isMobile?'80%':'1000px',
             margin: '0 auto',
             borderRadius: '12px',
-            padding: isMobile ? '2.5rem 2rem' : '3.5rem 3rem',
+            padding: isMobile ? '2rem 1.5rem' : '3.5rem 3rem',
             textAlign: 'center',
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
           }}>
