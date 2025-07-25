@@ -7,6 +7,7 @@ const HomePage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -17,11 +18,17 @@ const HomePage = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -48,39 +55,39 @@ const HomePage = () => {
 
   const services = [
     {
-      icon: '🔧',
+      icon: '⚙️',
       title: 'Industrial Automation',
-      description: 'Custom automation solutions for manufacturing processes, improving efficiency and reducing costs.',
+      description: 'Custom automation solutions for manufacturing processes, improving efficiency and reducing operational costs through advanced control systems.',
       features: ['PLC Programming', 'SCADA Systems', 'Robotic Integration', 'Process Optimization']
     },
     {
-      icon: '🖨️',
+      icon: '🔧',
       title: '3D Printing Services',
-      description: 'Advanced additive manufacturing with precision prototyping and production capabilities.',
+      description: 'Advanced additive manufacturing with precision prototyping and production capabilities for complex geometries and custom parts.',
       features: ['Rapid Prototyping', 'Production Parts', 'Custom Materials', 'Post-Processing']
     },
     {
-      icon: '⚙️',
+      icon: '🛠️',
       title: 'Mechatronic Design',
-      description: 'Integrated mechanical, electrical, and software solutions for complex engineering challenges.',
+      description: 'Integrated mechanical, electrical, and software solutions for complex engineering challenges in modern manufacturing.',
       features: ['System Integration', 'Control Systems', 'Sensor Networks', 'IoT Implementation']
     },
     {
       icon: '🤖',
       title: 'Robotics Solutions',
-      description: 'Cutting-edge robotic systems for manufacturing, assembly, and material handling.',
+      description: 'Cutting-edge robotic systems for manufacturing, assembly, and material handling with precision and reliability.',
       features: ['Industrial Robots', 'Collaborative Robots', 'Vision Systems', 'Path Planning']
     },
     {
-      icon: '🛠️',
+      icon: '📏',
       title: 'Instruments Calibration',
-      description: 'Precise calibration services to maintain accuracy and reliability of measurement instruments.',
+      description: 'Precise calibration services to maintain accuracy and reliability of measurement instruments with certified standards.',
       features: ['Traceable Calibration', 'Multi-Parameter Support', 'On-Site Services', 'Calibration Certificates']
     },
     {
       icon: '🔬',
       title: 'R&D Services',
-      description: 'Research and development support for innovative product development and optimization.',
+      description: 'Research and development support for innovative product development and optimization with cutting-edge methodologies.',
       features: ['Concept Development', 'Feasibility Studies', 'Prototype Testing', 'Technology Transfer']
     }
   ];
@@ -116,14 +123,7 @@ const HomePage = () => {
     }
   ];
 
-  const achievements = [
-    { title: 'ISO 9001:2015 Certified', description: 'Quality management systems certification' },
-    { title: 'Industry Excellence Award 2023', description: 'Recognized for innovation in automation' },
-    { title: 'Green Manufacturing Partner', description: 'Sustainable manufacturing practices' },
-    { title: 'Technology Innovation Award', description: 'Advanced mechatronic solutions' }
-  ];
-
-  // Cursor styling
+  // Cursor styling - unchanged as requested
   const customCursorStyle = {
     position: 'fixed',
     width: hoveredElement !== null ? '30px' : '15px',
@@ -142,14 +142,14 @@ const HomePage = () => {
     background: 'linear-gradient(135deg, #87CEEB 0%, #B0E0E6 25%, #ADD8E6 50%, #87CEFA 75%, #E0F7FA 100%)',
     minHeight: '100vh',
     color: '#333',
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     position: 'relative',
     overflow: 'hidden',
     cursor: isMobile ? 'default' : 'none'
   };
 
   const sectionStyle = {
-    padding: isMobile ? '3rem 1rem' : '5rem 2rem',
+    padding: isMobile ? '4rem 1rem' : '5rem 2rem',
     position: 'relative',
     zIndex: 2,
     maxWidth: '1200px',
@@ -157,77 +157,33 @@ const HomePage = () => {
   };
 
   const sectionTitleStyle = {
-    fontSize: isMobile ? '2rem' : '2.5rem',
-    fontWeight: '800',
+    fontSize: isMobile ? '2.2rem' : '2.8rem',
+    fontWeight: '700',
     textAlign: 'center',
     marginBottom: '1rem',
-    background: 'linear-gradient(135deg, #333, #444, #555)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    animation: 'glow 2s ease-in-out infinite alternate'
+    color: '#2c3e50',
+    letterSpacing: '-0.02em'
   };
 
   const sectionSubtitleStyle = {
-    fontSize: isMobile ? '1rem' : '1.2rem',
+    fontSize: isMobile ? '1rem' : '1.1rem',
     textAlign: 'center',
     marginBottom: '3rem',
-    color: '#c0392b',
-    fontStyle: 'italic',
-    opacity: 0.9
+    color: '#34495e',
+    fontWeight: '400',
+    maxWidth: '600px',
+    margin: '0 auto 3rem'
   };
 
   const styles = `
-    @keyframes glow {
-      0% { text-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-      100% { text-shadow: 0 0 20px rgba(0, 0, 0, 0.2); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes numberGlow {
-      0% { 
-        background-position: 0% 50%;
-        text-shadow: 0 0 10px rgba(192, 57, 43, 0.3);
-      }
-      100% { 
-        background-position: 100% 50%;
-        text-shadow: 0 0 15px rgba(192, 57, 43, 0.5);
-      }
-    }
-
     @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
+      from { transform: translateX(-30px); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    .service-card {
-      animation: fadeInUp 0.8s ease-out;
-      animation-fill-mode: both;
-    }
-
-    .testimonial-card {
-      animation: slideIn 0.8s ease-out;
     }
 
     .hero-slide {
@@ -239,15 +195,33 @@ const HomePage = () => {
       background-size: cover;
       background-position: center;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
+      transition: opacity 1.2s ease-in-out;
     }
 
     .hero-slide.active {
       opacity: 1;
     }
 
-    .gears-decoration {
-      animation: float 3s ease-in-out infinite;
+    .professional-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .professional-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border-color: rgba(192, 57, 43, 0.2);
+    }
+
+    .service-icon {
+      transition: transform 0.2s ease;
+    }
+
+    .professional-card:hover .service-icon {
+      transform: scale(1.1);
     }
   `;
 
@@ -256,143 +230,121 @@ const HomePage = () => {
       <style>{styles}</style>
       <div style={customCursorStyle}></div>
       <div style={pageStyle}>
-        {/* Hero Section with Sliding Images */}
+        {/* Hero Section */}
         <section style={{
-            height: '100vh',
-            width: '100%',
-            position: 'relative',
-            overflow: 'hidden',
-            paddingTop: isMobile ? '60px' : '0'
-          }}>
-            {/* Hero Slides */}
+          height: '100vh',
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden',
+          paddingTop: isMobile ? '60px' : '0'
+        }}>
+          {/* Hero Slides */}
+          {[1,2,3,4,5,6,7,8,9].map((num, index) => (
             <div 
-              className={`hero-slide ${currentSlide === 0 ? 'active' : ''}`}
+              key={num}
+              className={`hero-slide ${currentSlide === index ? 'active' : ''}`}
               style={{
-                backgroundImage: "url('hero1.jpeg')",
+                backgroundImage: `url('hero${num}.jpeg')`,
                 zIndex: 1
               }}
             ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 1 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero2.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 2 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero3.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 3 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero4.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 4 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero5.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 5 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero6.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 6 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero7.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 7 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero8.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            <div 
-              className={`hero-slide ${currentSlide === 8 ? 'active' : ''}`}
-              style={{
-                backgroundImage: "url('hero9.jpeg')",
-                zIndex: 1
-              }}
-            ></div>
-            {/* Overlay */}
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              zIndex: 2
-            }}></div>
-          </section>
+          ))}
+          
+          {/* Professional Overlay */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(135deg, rgba(44, 62, 80, 0.85) 0%, rgba(52, 73, 94, 0.75) 50%, rgba(44, 62, 80, 0.85) 100%)',
+            zIndex: 2
+          }}></div>
 
-        {/* BlackSmith MechaTronics Block - Now positioned below hero section */}
+          {/* Hero Content */}
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 3,
+            textAlign: 'center',
+            color: 'white',
+            padding: '2rem',
+            maxWidth: '800px'
+          }}>
+            <h1 style={{
+              fontSize: isMobile ? '2.5rem' : '3.8rem',
+              fontWeight: '700',
+              marginBottom: '1.5rem',
+              textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+              animation: 'fadeIn 1s ease-out',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.2'
+            }}>
+              Engineering Excellence in Manufacturing
+            </h1>
+            <p style={{
+              fontSize: isMobile ? '1.1rem' : '1.3rem',
+              marginBottom: '2rem',
+              textShadow: '0 1px 5px rgba(0,0,0,0.3)',
+              animation: 'fadeIn 1s ease-out 0.3s both',
+              fontWeight: '400',
+              opacity: 0.95,
+              lineHeight: '1.6'
+            }}>
+              Advanced Mechatronic Solutions for Industrial Innovation
+            </p>
+          </div>
+        </section>
+
+        {/* Company Introduction */}
         <section style={{
           position: 'relative',
           zIndex: 3,
-          marginTop: isMobile ? '6rem' : '8rem',
-          marginBottom: isMobile ? '3rem' : '5rem'
+          marginTop: isMobile ? '4rem' : '6rem',
+          marginBottom: isMobile ? '3rem' : '4rem'
         }}>
-          <div style={{
+          <div className="professional-card" style={{
             position: 'relative',
             zIndex: 4,
-            width: isMobile ? '90%' : '60%',
-            maxWidth: '1200px',
+            width: isMobile ? '95%' : '80%',
+            maxWidth: '1000px',
             margin: '0 auto',
-            background: 'rgba(255, 255, 255, 0.3)',
-            backdropFilter: 'blur(10px)',
-            borderRadius: '20px',
-            border: '1px solid rgba(255, 255, 255, 0.11)',
-            padding: isMobile ? '2rem 1.5rem' : '3rem 2rem',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-            textAlign: 'center'
+            borderRadius: '12px',
+            padding: isMobile ? '2.5rem 2rem' : '3.5rem 3rem',
+            textAlign: 'center',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
           }}>
             <h1 style={{
-              fontSize: isMobile ? '2.2rem' : 'clamp(2rem, 5vw, 3.5rem)',
+              fontSize: isMobile ? '2.2rem' : '2.8rem',
               marginBottom: '1rem',
-              fontWeight: '800',
-              animation: 'glow 2s ease-in-out infinite alternate',
-              lineHeight: '1.2'
+              fontWeight: '700',
+              lineHeight: '1.3',
+              color: '#2c3e50'
             }}>
-              <span style={{ color: '#333' }}>BlackSmith</span>{' '}
-              <span style={{ color: '#c0392b', textShadow: '0 0 10px rgba(192, 57, 43, 0.3)' }}>MechaTronics</span>
+              <span style={{ color: '#2c3e50' }}>BlackSmith</span>{' '}
+              <span style={{ color: '#c0392b' }}>MechaTronics</span>
             </h1>
             
             <p style={{
-              fontSize: isMobile ? '0.9rem' : '1.2rem',
+              fontSize: isMobile ? '0.95rem' : '1.1rem',
               marginBottom: '1rem',
               fontStyle: 'italic',
               color: '#c0392b',
-              animation: 'fadeInUp 1s ease-out 0.7s both',
-              textShadow: '0 1px 2px rgba(0,0,0,0.3)',
-              fontWeight: '600'
+              fontWeight: '500'
             }}>
               Future of Advanced Technological Products
             </p>
             
             <p style={{
-              fontSize: isMobile ? '1rem' : '1.3rem',
-              marginBottom: '2rem',
-              color: '#333',
+              fontSize: isMobile ? '1rem' : '1.15rem',
+              marginBottom: '2.5rem',
+              color: '#34495e',
               maxWidth: '800px',
-              margin: '0 auto 2rem',
-              animation: 'fadeInUp 1s ease-out 0.5s both',
-              textShadow: '0 1px 2px rgba(0,0,0,0.1)',
-              fontWeight: '500'
+              margin: '0 auto 2.5rem',
+              lineHeight: '1.7',
+              fontWeight: '400'
             }}>
               Engineering Excellence in Mechanical, Instrumentation, Electrical & Advanced Manufacturing Solutions
             </p>
@@ -400,44 +352,36 @@ const HomePage = () => {
             <div style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-              gap: '1.5rem',
+              gap: '2rem',
               marginTop: '3rem'
             }}>
-              {stats.slice(0, 3).map((stat, index) => (
+              {stats.map((stat, index) => (
                 <div
                   key={index}
+                  className="professional-card"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.3)',
-                    backdropFilter: 'blur(5px)',
-                    padding: '1.5rem',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(255, 255, 255, 0.53)',
+                    padding: '2rem 1.5rem',
+                    borderRadius: '8px',
                     textAlign: 'center',
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                    animation: `fadeInUp 1s ease-out ${1 + index * 0.2}s both`,
                     cursor: isMobile ? 'default' : 'none',
-                    transform: hoveredElement === `stat-${index}` ? 'translateY(-5px) scale(1.02)' : 'none',
-                    boxShadow: hoveredElement === `stat-${index}` ? '0 10px 20px rgba(192, 57, 43, 0.3)' : '0 5px 15px rgba(0, 0, 0, 0.1)'
+                    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.08)'
                   }}
                   onMouseEnter={() => !isMobile && setHoveredElement(`stat-${index}`)}
                   onMouseLeave={() => !isMobile && setHoveredElement(null)}
                 >
                   <span style={{
-                    fontSize: '1.8rem',
+                    fontSize: '2rem',
                     fontWeight: '700',
                     color: '#c0392b',
                     display: 'block',
-                    marginBottom: '0.5rem',
-                    animation: 'numberGlow 2s ease-in-out infinite alternate',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                    marginBottom: '0.5rem'
                   }}>
                     {stat.number}
                   </span>
                   <span style={{ 
-                    fontSize: '0.9rem', 
-                    color: '#333',
-                    fontWeight: '500',
-                    textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+                    fontSize: '0.95rem', 
+                    color: '#34495e',
+                    fontWeight: '500'
                   }}>
                     {stat.label}
                   </span>
@@ -450,73 +394,78 @@ const HomePage = () => {
         {/* Services Section */}
         <section style={sectionStyle}>
           <h2 style={sectionTitleStyle}>Our Services</h2>
-          <p style={sectionSubtitleStyle}>Comprehensive solutions for modern industrial challenges</p>
+          <p style={sectionSubtitleStyle}>
+            Comprehensive engineering solutions designed to optimize your manufacturing processes and drive operational excellence.
+          </p>
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(350px, 1fr))',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(380px, 1fr))',
             gap: '2rem'
           }}>
             {services.map((service, index) => (
               <div
                 key={index}
-                className="service-card"
+                className="professional-card"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.95)',
-                  borderRadius: '16px',
-                  padding: '2rem',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                  transition: 'all 0.4s ease',
+                  borderRadius: '10px',
+                  padding: '2.5rem',
                   cursor: isMobile ? 'default' : 'none',
-                  transform: hoveredElement === `service-${index}` ? 'translateY(-10px) scale(1.02)' : 'none',
-                  boxShadow: hoveredElement === `service-${index}` ? '0 20px 40px rgba(192, 57, 43, 0.15)' : '0 10px 30px rgba(0, 0, 0, 0.1)',
-                  animationDelay: `${index * 0.2}s`
+                  boxShadow: '0 8px 25px rgba(0, 0, 0, 0.08)',
+                  height: 'fit-content'
                 }}
                 onMouseEnter={() => !isMobile && setHoveredElement(`service-${index}`)}
                 onMouseLeave={() => !isMobile && setHoveredElement(null)}
               >
-                <div style={{
-                  fontSize: '3rem',
-                  marginBottom: '1rem',
-                  textAlign: 'center',
-                  animation: hoveredElement === `service-${index}` ? 'pulse 1s infinite' : 'none'
-                }}>
+                <div 
+                  className="service-icon"
+                  style={{
+                    fontSize: '2.5rem',
+                    marginBottom: '1.5rem',
+                    textAlign: 'center',
+                    filter: 'grayscale(0.2)'
+                  }}
+                >
                   {service.icon}
                 </div>
+                
                 <h3 style={{
                   fontSize: '1.4rem',
-                  fontWeight: '700',
+                  fontWeight: '600',
                   marginBottom: '1rem',
-                  color: '#2d3436',
+                  color: '#2c3e50',
                   textAlign: 'center'
                 }}>
                   {service.title}
                 </h3>
+                
                 <p style={{
                   fontSize: '1rem',
                   lineHeight: '1.6',
-                  color: '#636e72',
+                  color: '#5d6d7e',
                   marginBottom: '1.5rem',
                   textAlign: 'center'
                 }}>
                   {service.description}
                 </p>
+                
                 <div style={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: '0.5rem',
+                  gap: '0.6rem',
                   justifyContent: 'center'
                 }}>
                   {service.features.map((feature, idx) => (
                     <span
                       key={idx}
                       style={{
-                        fontSize: '0.8rem',
+                        fontSize: '0.85rem',
                         padding: '0.4rem 0.8rem',
-                        borderRadius: '20px',
-                        background: '#f8f9fa',
-                        color: '#2d3436',
-                        border: '1px solid #e9ecef'
+                        borderRadius: '15px',
+                        background: '#ecf0f1',
+                        color: '#2c3e50',
+                        border: '1px solid #d5dbdb',
+                        fontWeight: '500'
                       }}
                     >
                       {feature}
@@ -530,19 +479,20 @@ const HomePage = () => {
 
         {/* Testimonials Section */}
         <section style={sectionStyle}>
-          <h2 style={sectionTitleStyle}>What Our Clients Say</h2>
-          <p style={sectionSubtitleStyle}>Trusted by industry leaders across Gujarat and beyond</p>
+          <h2 style={sectionTitleStyle}>Client Testimonials</h2>
+          <p style={sectionSubtitleStyle}>
+            Trusted partnerships with leading industries across Gujarat and beyond.
+          </p>
           
-          <div style={{
+          <div className="professional-card" style={{
             position: 'relative',
             maxWidth: '800px',
             margin: '0 auto',
-            background: 'rgba(255, 255, 255, 0.95)',
-            borderRadius: '20px',
+            borderRadius: '12px',
             padding: '3rem',
-            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.1)',
             textAlign: 'center',
-            minHeight: isMobile? '450px' : '300px'
+            minHeight: isMobile ? '400px' : '300px',
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)'
           }}>
             <div style={{
               position: 'relative',
@@ -557,52 +507,66 @@ const HomePage = () => {
                     left: 0,
                     right: 0,
                     opacity: activeTestimonial === index ? 1 : 0,
-                    transition: 'opacity 0.6s ease-in-out',
+                    transition: 'opacity 0.5s ease-in-out',
                     padding: '0 1rem',
                     pointerEvents: activeTestimonial === index ? 'auto' : 'none'
                   }}
                 >
                   <div style={{
-                    fontSize: '4rem',
+                    fontSize: '3rem',
                     color: '#c0392b',
                     marginBottom: '1rem',
                     opacity: 0.3,
-                    lineHeight: 1
+                    lineHeight: 1,
+                    fontFamily: 'Georgia, serif'
                   }}>
                     "
                   </div>
+                  
                   <p style={{
-                    fontSize: '1.2rem',
-                    lineHeight: '1.8',
-                    color: '#2d3436',
+                    fontSize: '1.1rem',
+                    lineHeight: '1.7',
+                    color: '#2c3e50',
                     marginBottom: '2rem',
-                    fontStyle: 'italic'
+                    fontStyle: 'italic',
+                    maxWidth: '600px',
+                    margin: '0 auto 2rem'
                   }}>
                     {testimonial.text}
                   </p>
+                  
                   <div style={{
                     display: 'flex',
                     justifyContent: 'center',
                     marginBottom: '1rem'
                   }}>
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <span key={i} style={{ color: '#f39c12', fontSize: '1.5rem' }}>★</span>
+                      <span key={i} style={{ color: '#f39c12', fontSize: '1.2rem' }}>★</span>
                     ))}
                   </div>
+                  
                   <h4 style={{
-                    fontSize: '1.2rem',
-                    fontWeight: '700',
-                    color: '#2d3436',
-                    marginBottom: '0.5rem'
+                    fontSize: '1.1rem',
+                    fontWeight: '600',
+                    color: '#2c3e50',
+                    marginBottom: '0.3rem'
                   }}>
                     {testimonial.name}
                   </h4>
                   <p style={{
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     color: '#c0392b',
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    marginBottom: '0.2rem'
                   }}>
-                    {testimonial.position}, {testimonial.company}
+                    {testimonial.position}
+                  </p>
+                  <p style={{
+                    fontSize: '0.9rem',
+                    color: '#7f8c8d',
+                    fontWeight: '400'
+                  }}>
+                    {testimonial.company}
                   </p>
                 </div>
               ))}
@@ -619,11 +583,11 @@ const HomePage = () => {
                   key={index}
                   onClick={() => setActiveTestimonial(index)}
                   style={{
-                    width: '12px',
-                    height: '12px',
+                    width: '10px',
+                    height: '10px',
                     borderRadius: '50%',
                     border: 'none',
-                    background: activeTestimonial === index ? '#c0392b' : '#ddd',
+                    background: activeTestimonial === index ? '#c0392b' : '#bdc3c7',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}
@@ -637,48 +601,51 @@ const HomePage = () => {
         <section style={{
           ...sectionStyle,
           textAlign: 'center',
-          background: 'rgba(192, 57, 43, 0.1)',
-          borderRadius: '20px',
-          margin: '2rem auto',
-          maxWidth: '1000px',
-          marginBottom:'90px'
+          marginBottom: '80px'
         }}>
-          <h2 style={{
-            ...sectionTitleStyle,
-            color: '#c0392b',
-            marginBottom: '1rem'
+          <div className="professional-card" style={{
+            borderRadius: '12px',
+            margin: '2rem auto',
+            maxWidth: '900px',
+            padding: isMobile ? '2.5rem 2rem' : '3rem 2.5rem',
+            background: 'rgba(44, 62, 80, 0.38)',
+            color: 'white',
+            boxShadow: '0 15px 35px rgba(0, 0, 0, 0.15)'
           }}>
-            Ready to Transform Your Manufacturing?
-          </h2>
-          <p style={{
-            fontSize: '1.2rem',
-            marginBottom: '2rem',
-            color: '#2d3436',
-            opacity: 0.9
-          }}>
-            Let's discuss how our advanced mechatronic solutions can revolutionize your industrial processes.
-          </p>
-          <div style={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            gap: '1rem',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <Link to='/contact'>
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : '2.5rem',
+              fontWeight: '700',
+              color: '#2c3e50',
+              marginBottom: '1rem'
+            }}>
+              Ready to Optimize Your Manufacturing?
+            </h2>
+            
+            <p style={{
+              fontSize: '1.1rem',
+              marginBottom: '2rem',
+              color: 'rgba(26, 14, 58, 0.9)',
+              maxWidth: '600px',
+              margin: '0 auto 2rem',
+              lineHeight: '1.6'
+            }}>
+              Let's discuss how our engineering solutions can enhance your operational efficiency and drive sustainable growth.
+            </p>
+            
+            <Link to='/contact' style={{textDecoration: 'none'}}>
               <button
                 style={{
                   background: '#c0392b',
                   color: 'white',
                   padding: '1rem 2.5rem',
                   border: 'none',
-                  borderRadius: '50px',
+                  borderRadius: '6px',
                   fontSize: '1rem',
                   fontWeight: '600',
-                  cursor: 'pointer',
+                  cursor: 'none',
                   transition: 'all 0.3s ease',
-                  transform: hoveredElement === 'cta-primary' ? 'translateY(-3px) scale(1.05)' : 'none',
-                  boxShadow: hoveredElement === 'cta-primary' ? '0 10px 25px rgba(192, 57, 43, 0.3)' : 'none'
+                  transform: hoveredElement === 'cta-primary' ? 'translateY(-2px)' : 'none',
+                  boxShadow: hoveredElement === 'cta-primary' ? '0 8px 20px rgba(192, 57, 43, 0.3)' : '0 4px 10px rgba(0, 0, 0, 0.1)'
                 }}
                 onMouseEnter={() => !isMobile && setHoveredElement('cta-primary')}
                 onMouseLeave={() => !isMobile && setHoveredElement(null)}
