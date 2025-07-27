@@ -1361,7 +1361,7 @@
   color: #3b82f6;
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+  cursor: none;
   z-index: 10;
   transition: all 0.3s ease;
 }
